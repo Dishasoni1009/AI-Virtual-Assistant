@@ -1,4 +1,4 @@
-# 🤖 MERN Virtual Assistant
+# 🤖 AI Virtual Assistant using MERN Stack
 
 A full-stack **Virtual Assistant web application** built using the **MERN stack**.  
 This project focuses on user authentication and forms the foundation for an AI-powered assistant that will help users with queries and tasks.
