@@ -1,12 +1,19 @@
 import express from "express";
 import dotenv from "dotenv";
+dotenv.config() // ye line .env file k ander jo bhi variable hai usko read krne k liye hoti hai
 import connectDb from "./config/db.js"
 import authRouter from "./routes/auth.routes.js";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 
-dotenv.config() // ye line .env file k ander jo bhi variable hai usko read krne k liye hoti hai
+
+
 
 const app=express()  // express k andar jitni bhi function h usko ham app k thru call kr sakte hai 
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true
+}))
 const port=process.env.PORT || 5000  // agar .env file me PORT variable define nahi hai to ye default 3000 pe chalega
 
 // app.get("/",(req,res)=>{
