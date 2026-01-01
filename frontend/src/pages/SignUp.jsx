@@ -1,27 +1,55 @@
-import React, {useState} from "react"
+import React, { useContext, useState } from 'react'
 import bg from "../assets/authBg.png"
 import { useNavigate } from "react-router-dom";
 import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
+import { UserDataContext } from "../context/UserContext";
+import axios from "axios";
 
 function SignUp() {
     
     const [showPassword,setShowPassword]=useState(false)
+    const {serverUrl}=useContext(UserDataContext)
     const navigate=useNavigate()
     const [name,setName]=useState("")
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
 
-    const handleSignUp=async ()=>{
-        // Sign up logic to be implemented
-        
-    };
+    const handleSignUp = async (e)=>{
+    e.preventDefault()
+         // Sign up logic to be implemented
+  
 
+     try {
+        let result = await axios.post(`${serverUrl}/api/auth/signup`,{
+    name,email,password},{withCredentials :true} 
+        );
+        console.log("Sign up successful:", result.data);
+        
+        // ye new add kara h mene harsh 
+        // Redirect to sign in page after successful signup
+        navigate("/signin");
+        // ye new add kara h mene harsh 
+
+    } catch (error) {
+        console.error("Error during sign up:", error);
+
+        // ye new add kara h mene harsh 
+        // Log the actual error message from backend
+        if (error.response && error.response.data && error.response.data.message) {
+            console.error("Backend error:", error.response.data.message);
+            alert(error.response.data.message); // Show error to user
+        } else {
+            alert("An error occurred during sign up. Please try again.");
+        }
+        // ye new add kara h mene harsh 
+    } 
+};
     return (
        <div className="w-full h-[100vh] bg-cover bg-center flex justify-center items-center" style={{ backgroundImage: `url(${bg})` }}>
 
 
-            <form className='w-[90%] h-[600px] max-w-[500px] bg-[#00000062] backdrop-blur shadow-lg shadow-black flex flex-col items-center justify-center gap-[20px] px-[20px]'>
+            <form className='w-[90%] h-[600px] max-w-[500px] bg-[#00000062] backdrop-blur shadow-lg shadow-black flex flex-col items-center justify-center gap-[20px] px-[20px]' onSubmit={handleSignUp}>
 
                 <h1 className='text-white text-[30px] font-semibold mb-[30px]'>Register to <span className='text-blue-400'>Virtual Assistant</span></h1>
 
